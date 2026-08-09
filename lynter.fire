@@ -1,0 +1,42 @@
+#!/usr/bin/infernal
+
+###
+lynter.fire
+Copyright (C) 2026, David Baña Szymaniak
+
+MIT License
+ * EN: See LICENSE for the full license text.
+ * ES: Mira LICENSE para el texto entero de la licencia.
+###
+
+#--------------------------------------------------
+# EN: Funtions to configure lynter.fire
+# ES: Funciones para configurar lynter.fire
+
+function show_error()
+    print("EN: You do not have Lynter installed or embebed.")
+    print("ES: No tienes Lynter istalado o embebido."
+fi
+
+#---------------------------------------------------
+# EN: Functions to use Lynter
+# ES: Funciones para usar Lynter
+
+function mkwin(string window_name)
+    try
+        window_id = !lynter --mkwin-id $window_name! #try embedded
+        !lynter --mkwin $window_name! #try embedded
+        mkvar("global", "string", window_name, window_id)
+    catch
+        try
+            /usr/share/infernal/bins/lynter --mkwin $window_name #try system
+            $window_name = $window_name
+        catch
+            show_error()
+        fi
+    fi
+fi
+
+### mkwin() doc:
+mkwin("MyWindow") # without whitespaces
+###
